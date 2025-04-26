@@ -131,3 +131,6 @@ src/server/temp/ # Temp folder specific to server dir if any left
 
 # VS Code settings
 .vscode/
+
+# JetBrains IDE
+.idea/
