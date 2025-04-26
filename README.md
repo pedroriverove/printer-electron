@@ -164,7 +164,6 @@ Estos comandos se ejecutan desde la raíz del proyecto (`printer-electron`).
             * `vite.config.js`: Configuración de Vite.
         * `server/`: Componente de impresión C#.
             * `TicketPrinter.cs`: Código fuente C#.
-            * `TicketPrinter.exe`: Ejecutable C# compilado (¡Importante!).
     * `.editorconfig`: Reglas de estilo de código para editores.
     * `eslint.config.js`: Configuración de ESLint para el proceso principal/preload.
     * `main.js`: Punto de entrada del Proceso Principal de Electron.
