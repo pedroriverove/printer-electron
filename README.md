@@ -147,31 +147,30 @@ Estos comandos se ejecutan desde la raíz del proyecto (`printer-electron`).
 4.  Importante: Desinstala cualquier versión anterior de la aplicación antes de instalar la nueva versión generada.
 5.  Instala y prueba la aplicación desde el archivo generado en `dist/`.
 
-## 📁 Estructura de carpetas (simplificada)
-printer-electron/
-├── dist/                 # Salida de electron-builder (instaladores)
-├── node_modules/         # Dependencias de Node (raíz)
-├── public/               # Archivos estáticos para Electron (ej: icono)
-├── src/
-│   ├── react-ui/         # Código fuente de la interfaz React/Vite
-│   │   ├── dist/         # Salida de 'npm run build:react'
-│   │   ├── node_modules/ # Dependencias de React/Vite
-│   │   ├── public/       # Archivos estáticos para Vite (ej: vite.svg)
-│   │   ├── src/          # Código fuente React (App.jsx, main.jsx, etc.)
-│   │   ├── eslint.config.js # Config ESLint para React
-│   │   ├── package.json  # Dependencias y scripts de React UI
-│   │   └── vite.config.js# Configuración de Vite
-│   │
-│   └── server/           # Componente C# y relacionados
-│       ├── TicketPrinter.cs # Código fuente C#
-│       └── TicketPrinter.exe # Ejecutable C# compilado (¡Debe estar aquí!)
-│
-├── .editorconfig         # Configuración de estilo de código para editores
-├── eslint.config.js      # Configuración ESLint (raíz - para main.js, preload.js)
-├── main.js               # Punto de entrada - Proceso Principal Electron
-├── preload.js            # Script Preload para IPC seguro
-├── package.json          # Dependencias, scripts y config build (raíz)
-└── README.md             # Este archivo
+## 📁 Estructura de carpetas (principales)
+
+* `/` (Raíz del proyecto `printer-electron`)
+    * `dist/`: Salida de `electron-builder` (instaladores generados).
+    * `node_modules/`: Dependencias de Node.js para el proyecto raíz y Electron.
+    * `public/`: Archivos estáticos globales para Electron (ej: icono `.ico`).
+    * `src/`: Carpeta principal del código fuente.
+        * `react-ui/`: Código fuente del proyecto de la interfaz (React + Vite).
+            * `dist/`: Salida de `npm run build:react` (build estático de React).
+            * `node_modules/`: Dependencias específicas para React/Vite.
+            * `public/`: Archivos estáticos para Vite (ej: `vite.svg`).
+            * `src/`: Código fuente React (componentes `jsx`, `css`, etc.).
+            * `eslint.config.js`: Configuración de ESLint para React.
+            * `package.json`: Scripts y dependencias de `react-ui`.
+            * `vite.config.js`: Configuración de Vite.
+        * `server/`: Componente de impresión C#.
+            * `TicketPrinter.cs`: Código fuente C#.
+            * `TicketPrinter.exe`: Ejecutable C# compilado (¡Importante!).
+    * `.editorconfig`: Reglas de estilo de código para editores.
+    * `eslint.config.js`: Configuración de ESLint para el proceso principal/preload.
+    * `main.js`: Punto de entrada del Proceso Principal de Electron.
+    * `preload.js`: Script de Preload para comunicación segura IPC.
+    * `package.json`: Configuración general del proyecto, scripts y dependencias raíz.
+    * `README.md`: Este archivo de documentación.
 
 ##  💅 Linting y formato
 
