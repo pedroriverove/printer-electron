@@ -1,0 +1,15 @@
+<C>RESTAURANTE DELICIAS</C>
+<C>---------------------</C>
+Fecha: 12/05/2024 14:30
+Mesero: Juan Pérez
+Mesa: 5
+----------------------------
+1x Pizza Hawaiana      $120
+2x Refresco            $40
+1x Café                $25
+----------------------------
+Subtotal:              $185
+IVA (16%):             $29.60
+<C>TOTAL:              $214.60</C>
+<C>=====================</C>
+<C>¡GRACIAS POR SU VISITA!</C>

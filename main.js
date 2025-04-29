@@ -15,16 +15,38 @@ const getExePath = () => {
 };
 
 function formatTicket(data) {
+  const betsText = data.bets && data.bets.length
+    ? data.bets.map((bet, index) => (
+      `${index + 1}. ${bet.category || 'General'} - ${bet.match}\n    Apuesta: ${bet.pick}\n    Cuota: ${bet.odds}`
+    )).join('\r\n\r\n')
+    : 'Sin apuestas registradas';
+
+  const totalOdds = data.bets?.reduce((acc, b) => acc * b.odds, 1).toFixed(2) || '1.00';
+
   return [
     '===========================',
     '      LOTERÍA NACIONAL     ',
     '===========================',
+    `Terminal: ${data.terminalId || '---'}`,
+    `Agencia:  ${data.agency || '---'}`,
+    `Cliente:  Anónimo`,
     '',
-    `Número:   ${data.number || '000000'}`,
+    `Ticket #: ${data.number || '000000'}`,
     `Fecha:    ${data.date || new Date().toLocaleString()}`,
     `Sorteo:   ${data.game || 'LOTTO'}`,
-    `Valor:    $${(data.amount || '2.00').padStart(7)}`,
+    `Evento:   ${data.drawDate || '---'}`,
+    `Modalidad: ${data.modality || 'Directo'}`,
+    `Estado:   ${data.status || 'Pendiente'}`,
     '',
+    `JUGADAS:  ${data.bets?.length || 0}`,
+    '----- DETALLE -----',
+    betsText,
+    '',
+    `Valor Apostado:    $${(data.amount || '2.00').padStart(7)}`,
+    `Cuota Total:       x${totalOdds}`,
+    `Ganancia Potencial: $${data.potentialWin || '0.00'}`,
+    '',
+    `Verificación: ${data.verificationCode || '------'}`,
     '===========================',
     '       ¡BUENA SUERTE!      ',
     '',

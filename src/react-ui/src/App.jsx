@@ -24,7 +24,20 @@ function App() {
         date: new Date().toLocaleString(),
         game: 'LOTTO',
         amount: '2.00',
+        modality: 'Parley',
+        agency: 'Agencia Norte #12',
+        terminalId: 'TRM-9821',
+        status: 'Pendiente',
+        drawDate: '29/04/2025 20:00',
+        verificationCode: 'X7F92K',
+        bets: [
+          { match: 'Ecuador vs Brasil', pick: 'Ecuador gana', odds: 2.5, category: 'Fútbol' },
+          { match: 'Argentina vs Chile', pick: 'Más de 2.5 goles', odds: 1.8, category: 'Fútbol' },
+          { match: 'NBA - Lakers vs Heat', pick: 'Lakers gana', odds: 1.6, category: 'Baloncesto' },
+        ],
+        potentialWin: '14.40',
       };
+
 
       setStatus('Enviando a impresora...');
 
