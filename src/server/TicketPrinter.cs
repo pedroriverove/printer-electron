@@ -73,14 +73,12 @@ class TicketPrinter
             throw new Exception($"Printer '{printerName}' not available");
         }
 
-        // Configuración revolucionaria
-        int HARDWARE_OFFSET = 15; // Compensación universal para márgenes de hardware
+        int HARDWARE_OFFSET = 15;
         pd.DefaultPageSettings.PaperSize = new PaperSize("Custom", ticketWidth + HARDWARE_OFFSET * 2, 0);
         pd.DefaultPageSettings.Margins = new Margins(HARDWARE_OFFSET, HARDWARE_OFFSET, 15, 15);
 
         pd.PrintPage += (sender, e) =>
         {
-            // Sistema de impresión original probado
             Font font = new Font("Consolas", 9, FontStyle.Bold);
             SolidBrush brush = new SolidBrush(Color.Black);
 
@@ -88,7 +86,6 @@ class TicketPrinter
             float printableWidth = e.MarginBounds.Width - HARDWARE_OFFSET * 2;
             float centerBase = e.MarginBounds.Left + HARDWARE_OFFSET;
 
-            // Sistema de diagnóstico de alineación
             bool needsAlignmentCorrection = false;
             float alignmentCorrection = 0;
 
@@ -101,10 +98,8 @@ class TicketPrinter
                     string textToCenter = cleanLine.Substring(3).Trim();
                     SizeF textSize = e.Graphics.MeasureString(textToCenter, font);
 
-                    // Cálculo de posición con compensación inteligente
                     float xPos = centerBase + (printableWidth - textSize.Width) / 2 + alignmentCorrection;
 
-                    // Dibujar texto con sombra para diagnóstico (solo desarrollo)
                     if (needsAlignmentCorrection)
                     {
                         e.Graphics.DrawString(textToCenter, font,
@@ -121,7 +116,6 @@ class TicketPrinter
                 yPos += font.GetHeight(e.Graphics);
             }
 
-            // Sistema de auto-corrección (guardar ajustes para futuras impresiones)
             if (needsAlignmentCorrection)
             {
                 File.WriteAllText("printer_alignment.cfg", alignmentCorrection.ToString());
@@ -131,7 +125,6 @@ class TicketPrinter
             brush.Dispose();
         };
 
-        // Configuración de calidad garantizada
         pd.PrinterSettings.DefaultPageSettings.PrinterResolution = new PrinterResolution
         {
             Kind = PrinterResolutionKind.Custom,
