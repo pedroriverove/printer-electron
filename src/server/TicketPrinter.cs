@@ -42,6 +42,25 @@ class TicketPrinter
 
     static string GetBestAvailablePrinter()
     {
+        // First check if the default printer is valid and available
+        string defaultPrinter = null;
+        try
+        {
+            var defaultPrintDoc = new PrintDocument();
+            defaultPrinter = defaultPrintDoc.PrinterSettings.PrinterName;
+            if (!string.IsNullOrEmpty(defaultPrinter) && defaultPrintDoc.PrinterSettings.IsValid)
+            {
+                // Check if the default printer is actually connected and available
+                Console.WriteLine($"INFO: Impresora predeterminada encontrada: {defaultPrinter}");
+                return defaultPrinter;
+            }
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"INFO: Error al acceder a la impresora predeterminada: {ex.Message}");
+        }
+
+        // Second, try to find a thermal printer by name pattern
         var thermalPrinters = PrinterSettings.InstalledPrinters.Cast<string>()
             .Where(p => p.ToLower().Contains("thermal") ||
                        p.ToLower().Contains("ticket") ||
@@ -49,18 +68,46 @@ class TicketPrinter
                        p.StartsWith("XP", StringComparison.OrdinalIgnoreCase))
             .ToList();
 
-        if (thermalPrinters.Any())
+        // Check each thermal printer to make sure it's actually available
+        foreach (var printer in thermalPrinters)
         {
-            return thermalPrinters.First();
+            try
+            {
+                var pd = new PrintDocument();
+                pd.PrinterSettings.PrinterName = printer;
+                if (pd.PrinterSettings.IsValid)
+                {
+                    Console.WriteLine($"INFO: Impresora térmica disponible encontrada: {printer}");
+                    return printer;
+                }
+            }
+            catch (Exception)
+            {
+                // Skip this printer if it causes an error
+            }
         }
 
-        var defaultPrinter = new PrintDocument().PrinterSettings.PrinterName;
-        if (!string.IsNullOrEmpty(defaultPrinter) && new PrintDocument().PrinterSettings.IsValid)
+        // As a last resort, try any available printer
+        foreach (string printer in PrinterSettings.InstalledPrinters)
         {
-            return defaultPrinter;
+            try
+            {
+                var pd = new PrintDocument();
+                pd.PrinterSettings.PrinterName = printer;
+                if (pd.PrinterSettings.IsValid)
+                {
+                    Console.WriteLine($"INFO: Usando impresora genérica disponible: {printer}");
+                    return printer;
+                }
+            }
+            catch (Exception)
+            {
+                // Skip this printer if it causes an error
+            }
         }
 
-        return PrinterSettings.InstalledPrinters.Cast<string>().FirstOrDefault();
+        // No available printers found
+        return null;
     }
 
     static void PrintFormattedTicket(string content, string printerName, int ticketWidth)
